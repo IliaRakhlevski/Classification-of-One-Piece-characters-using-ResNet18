@@ -123,17 +123,17 @@ def read_image(file_path):
 
  
 # load data from the images list
+# images that cannot be read are skipped (so that they do not get a label)
 # images - list of the images
 def load_data_from_images(images):
-    imgs_len = len(images)
-    X = np.zeros((imgs_len, IMG_HEIGHT, IMG_WIDTH, CHANNELS), dtype=np.uint8)
-    
-    for i, image_file in enumerate(images):
+    X = []
+
+    for image_file in images:
         img = read_image(image_file)
         if img is not None:
-            X[i,:] = img
-        
-    return X
+            X.append(img)
+
+    return np.array(X, dtype=np.uint8).reshape(-1, IMG_HEIGHT, IMG_WIDTH, CHANNELS)
 
 
 # load data from the specific directory
