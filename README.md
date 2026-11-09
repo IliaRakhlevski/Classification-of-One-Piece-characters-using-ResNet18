@@ -31,10 +31,18 @@ Each class contains approximately 650 images:
 - color-inverted images,
 - other transformed variations.
 
-Images derived from the same original image were grouped together during dataset splitting in order to reduce data leakage between training, validation, and test sets.
-
 Dataset source:
 - Public Kaggle dataset
+
+The dataset is not included in this repository. The code expects it already split into three directories next to `main.py`, with one sub-directory per class (the names must match `CLASS_NAMES` in `main.py`):
+
+```text
+Train/Ace/..., Train/Akainu/..., ...
+Val/Ace/...,   Val/Akainu/...,   ...
+Test/Ace/...,  Test/Akainu/...,  ...
+```
+
+The split was prepared before training and is not performed by the code. Images derived from the same original image were kept in the same subset in order to reduce data leakage between training, validation, and test sets.
 
 ---
 
@@ -78,10 +86,7 @@ Number of classes:
 - Epochs: 80
 - Batch Size: 32
 
-The model was trained using multiple random seeds:
-- 42
-- 123
-- 777
+Training is seeded for reproducibility (`set_seed()` in `utils.py`). Runs were made with the seeds 42, 123 and 777; `main.py` currently uses 777, and the other two are kept as commented-out lines.
 
 ---
 
@@ -93,7 +98,7 @@ Best validation accuracy:
 Test accuracy:
 - 91.72%
 
-The model showed stable performance across different training runs.
+The test accuracy is measured with the model weights from the epoch with the best validation accuracy.
 
 ---
 
@@ -135,11 +140,13 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Run training:
+Place the `Train`, `Val` and `Test` directories next to `main.py` (see [Dataset](#dataset)), then run training and evaluation:
 
 ```bash
 python main.py
 ```
+
+The weights of the best epoch are saved to `best_model.pth`.
 
 ---
 
@@ -161,8 +168,10 @@ The goal was not only to achieve high accuracy, but also to understand model beh
 ├── main.py
 ├── utils.py
 ├── visualization.py
+├── requirements.txt
 ├── Project Description.docx
 ├── README.md
+├── LICENSE
 └── Selected_Results/
     ├── CM_plot.png
     ├── Top_confident_mistakes.png
@@ -185,4 +194,4 @@ Possible future improvements:
 
 ## License
 
-MIT License
+MIT - see [LICENSE](LICENSE).

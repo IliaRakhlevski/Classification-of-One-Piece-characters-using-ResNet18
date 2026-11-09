@@ -1,0 +1,6 @@
+numpy
+opencv-python
+torch>=1.13
+torchvision>=0.13
+scikit-learn
+matplotlib
